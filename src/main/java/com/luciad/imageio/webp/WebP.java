@@ -11,9 +11,15 @@ public final class WebP {
     private static boolean NATIVE_LIBRARY_LOADED = false;
 
     static synchronized void loadNativeLibrary() {
-        if (!NATIVE_LIBRARY_LOADED) {
-            NativeLibraryUtils.loadLibrary();
+        if (NATIVE_LIBRARY_LOADED) {
+            return;
+        }
+
+        try {
+            NativeLibraryUtils.automaticallyLoad();
             NATIVE_LIBRARY_LOADED = true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -10,24 +10,28 @@ import java.util.Locale;
 @UtilityClass
 public class PlatformUtil {
 
-    private Platfrom platform;
+    private Platform platform;
 
-    public Platfrom getPlatform() {
+    public Platform getPlatform() {
         if (platform != null) {
             return platform;
         }
 
         val os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
 
-        if (os.contains("win"))
-            return Platfrom.WINDOWS;
-        else if (os.contains("mac"))
-            return Platfrom.OSX;
-        else if (os.contains("solaris") || os.contains("sunos"))
-            return Platfrom.SOLARIS;
-        else if (os.contains("linux") || os.contains("unix"))
-            return Platfrom.LINUX;
-        return Platfrom.UNKNOWN;
+        if (os.contains("win")) {
+            platform = Platform.WINDOWS;
+        } else if (os.contains("mac")) {
+            platform = Platform.OSX;
+        } else if (os.contains("solaris") || os.contains("sunos")) {
+            platform = Platform.SOLARIS;
+        } else if (os.contains("linux") || os.contains("unix"))
+            platform = Platform.LINUX;
+        else {
+            platform = Platform.UNKNOWN;
+        }
+
+        return platform;
     }
 
     public boolean is64bit() {
@@ -54,7 +58,7 @@ public class PlatformUtil {
 
     @Getter
     @RequiredArgsConstructor
-    public enum Platfrom {
+    public enum Platform {
         LINUX("linux"),
         SOLARIS("solaris"),
         WINDOWS("windows"),
